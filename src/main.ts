@@ -8,7 +8,7 @@ import { otelSDK } from 'tracing';
 //TODO: write README
 
 async function bootstrap() {
-  otelSDK.start();
+  await otelSDK.start();
 
   const logger = new Logger('MAIN');
   const app = await NestFactory.create(AppModule);
@@ -30,7 +30,7 @@ async function bootstrap() {
 
     logger.log(`⭐️ App running at ${appUrl}`);
     logger.log(`📚 API docs at ${appUrl}/docs`);
-    logger.log(`🌡️  API tracing at http://localhost:16686/search`);
+    logger.log(`🌡️  API tracing at http://localhost:8081/metrics`);
   });
 }
 

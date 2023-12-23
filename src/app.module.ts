@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './user/entity/user.entity';
 import { UrlModule } from './url/url.module';
 import { Url } from './url/entity/url.entity';
+import { OpenTelemetryModuleConfig } from 'nest-otel';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { Url } from './url/entity/url.entity';
     AuthModule,
     UserModule,
     UrlModule,
+    OpenTelemetryModuleConfig,
   ],
 })
 export class AppModule {}

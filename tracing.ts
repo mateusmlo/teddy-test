@@ -6,19 +6,17 @@ import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { NestInstrumentation } from '@opentelemetry/instrumentation-nestjs-core';
 import { Resource } from '@opentelemetry/resources';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
-import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
-
-const jaegerExporter = new JaegerExporter({
-  endpoint: 'http://localhost:14268/api/traces',
-});
-
-const traceExporter = jaegerExporter;
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus'
+import { JaegerExporter } from '@opentelemetry/exporter-jaeger'
 
 export const otelSDK = new NodeSDK({
+  metricReader: new PrometheusExporter({
+    port: 8081,
+  }),
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: `teddy-dev`,
   }),
-  spanProcessor: new SimpleSpanProcessor(traceExporter),
+  spanProcessor: new SimpleSpanProcessor(new JaegerExporter()),
   instrumentations: [
     new HttpInstrumentation(),
     new ExpressInstrumentation(),
