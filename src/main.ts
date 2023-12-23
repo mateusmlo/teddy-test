@@ -3,8 +3,13 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import 'dotenv/config';
+import { otelSDK } from 'tracing';
+
+//TODO: write README
 
 async function bootstrap() {
+  otelSDK.start();
+
   const logger = new Logger('MAIN');
   const app = await NestFactory.create(AppModule);
 
@@ -25,6 +30,7 @@ async function bootstrap() {
 
     logger.log(`⭐️ App running at ${appUrl}`);
     logger.log(`📚 API docs at ${appUrl}/docs`);
+    logger.log(`🌡️  API tracing at http://localhost:16686/search`);
   });
 }
 
